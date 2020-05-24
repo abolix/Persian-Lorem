@@ -8,7 +8,7 @@ Simple persian lorem ipsum generator
 2. Press F1
 3. Type "install"
 4. Select "Extensions: Install Extension".
-5. Select Chinese Lorem Ipsm from the list
+5. Select Persian Lorem Ipsm from the list
 
 ## Usage
 
