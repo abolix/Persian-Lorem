@@ -81,9 +81,9 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(AutoCompletion);
 
-  /////////////////////
+  ////////////////////
   // Command
-  /////////////////////
+  ////////////////////
 
   let disposable = vscode.commands.registerCommand(
     "extension.GenerateLorem",
