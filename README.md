@@ -8,7 +8,7 @@ Simple persian lorem ipsum generator
 2. Press F1
 3. Type "install"
 4. Select "Extensions: Install Extension".
-5. Select Persian Lorem Ipsm from the list
+5. Select Persian Lorem from the list
 
 ## Usage
 
@@ -17,4 +17,4 @@ Simple persian lorem ipsum generator
 
 ### Or
 
-In your editor , type `plorem` to generate 1 paragraph of lorem ipsum or use `plorem` with number (example `lorem20`) to generate 20 words .
+In your editor , type `plorem` to generate 1 paragraph of lorem ipsum or use `plorem` with number (example : `lorem20`) to generate 20 words .

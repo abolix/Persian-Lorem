@@ -6,22 +6,22 @@ import {
   LoremText,
 } from "./const";
 
-const insertText = (LoremData: any) => {
+const insertText = (Words: number) => {
   var editor: any = vscode.window.activeTextEditor;
   editor.edit((edit: any) =>
     editor.selections.forEach((selection: any) => {
       edit.delete(selection);
-      edit.insert(selection.start, PersianLorem(LoremData.words));
+      edit.insert(selection.start, PersianLorem(Words));
     })
   );
 };
 
 const PersianLorem = (Words: any) => {
-  var LoremReturn = "";
+  var LoremReturn: string = "";
   if (Words.length === 0 || Words === 0) {
     return LoremText;
   }
-  var LoremSplited = LoremText.split(" ");
+  var LoremSplited: string[] = LoremText.split(" ");
   var SentenceReset = 0;
   for (var i = 0; i < Words; i++) {
     if (SentenceReset === LoremSplited.length) {
@@ -95,7 +95,7 @@ export function activate(context: vscode.ExtensionContext) {
             "Type how many words you want to insert ( empty for 1 paragraph ) ",
         })
         .then((words: any) => {
-          insertText({ words: words });
+          insertText(words);
         });
     },
   );
