@@ -1,9 +1,9 @@
 import * as vscode from "vscode";
 import {
   Command,
-  TriggerCharacters,
   CommandNumberRegExp,
   LoremText,
+  TriggerCharacters,
 } from "./const";
 
 const insertText = (words: number) => {
@@ -44,14 +44,70 @@ const extractNumber = (
   return 0;
 };
 
+const isValidContext = (document: vscode.TextDocument, position: vscode.Position): boolean => {
+  // For Vue files, check if we're in a template, script, or style section
+  if (document.languageId === 'vue') {
+    const text = document.getText();
+    const offset = document.offsetAt(position);
+
+    // Simple check - if we're in template or script tags, allow completion
+    const beforeText = text.substring(0, offset);
+    const templateMatch = beforeText.lastIndexOf('<template>');
+    const templateCloseMatch = beforeText.lastIndexOf('</template>');
+    const scriptMatch = beforeText.lastIndexOf('<script>');
+    const scriptCloseMatch = beforeText.lastIndexOf('</script>');
+
+    // Allow if we're in template section or script section
+    return (templateMatch > templateCloseMatch) || (scriptMatch > scriptCloseMatch);
+  }
+
+  // For React files (JSX/TSX), check if we're in JSX context
+  if (document.languageId === 'javascriptreact' || document.languageId === 'typescriptreact' ||
+      document.languageId === 'jsx' || document.languageId === 'tsx') {
+    const line = document.lineAt(position).text;
+    const beforeCursor = line.substring(0, position.character);
+
+    // Allow completion in JSX text content, string literals, and comments
+    // Avoid completion inside HTML tag attributes unless in string
+    const insideJSXTag = /<[^>]*$/.test(beforeCursor) && !/"[^"]*$/.test(beforeCursor) && !/'[^']*$/.test(beforeCursor);
+    return !insideJSXTag;
+  }
+
+  return true; // Allow for all other file types
+};
+
 export function activate(context: vscode.ExtensionContext) {
-  const autoCompletion = vscode.languages.registerCompletionItemProvider(
+  // Register completion provider for multiple language IDs including Vue and React
+  const supportedLanguages = [
     "*",
+    "html",
+    "vue",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "jsx",
+    "tsx",
+    "css",
+    "scss",
+    "less",
+    "json",
+    "markdown",
+    "plaintext"
+  ];
+
+  const autoCompletion = vscode.languages.registerCompletionItemProvider(
+    supportedLanguages,
     {
       provideCompletionItems(
         document: vscode.TextDocument,
         position: vscode.Position
       ) {
+        // Check if we're in a valid context for completion
+        if (!isValidContext(document, position)) {
+          return [];
+        }
+
         const wordCount = extractNumber(document, position);
         const completionItem = new vscode.CompletionItem(Command);
         completionItem.insertText = new vscode.SnippetString(generateLorem(wordCount));
