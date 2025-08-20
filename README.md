@@ -1,11 +1,26 @@
 # Persian Lorem
 
-A simple Persian Lorem Ipsum generator for Visual Studio Code.
+A simple Persian Lorem Ipsum generator for Visual Studio Code that works seamlessly across HTML, Vue.js, React, and other file types.
 
 ## Features
 
 - Generate Persian Lorem Ipsum text with ease.
 - Insert a paragraph or a specific number of words directly into your editor.
+- **Full support for Vue.js files** (.vue) with smart context detection
+- **Complete React/JSX/TSX support** including TypeScript React files
+- Works in HTML, JavaScript, TypeScript, CSS, and more
+- Smart context validation to avoid inappropriate completions
+
+## Supported File Types
+
+- HTML (`.html`)
+- Vue.js (`.vue`) - with template and script section detection
+- React JavaScript (`.js`, `.jsx`)
+- React TypeScript (`.ts`, `.tsx`)
+- CSS/SCSS/Less (`.css`, `.scss`, `.less`)
+- JSON (`.json`)
+- Markdown (`.md`)
+- Plain text and more
 
 ## Installation
 
@@ -27,10 +42,31 @@ A simple Persian Lorem Ipsum generator for Visual Studio Code.
 - Type `plorem` to generate one paragraph of Persian Lorem Ipsum.
 - Type `plorem<number>` (e.g., `plorem20`) to generate a specific number of words.
 
-## Example
+## Examples
 
+### Basic Usage
 - `plorem` generates a paragraph of Persian Lorem Ipsum.
 - `plorem20` generates 20 words of Persian Lorem Ipsum.
+
+### Vue.js Example
+```vue
+<template>
+  <div>
+    <p>plorem50</p> <!-- Generates 50 words -->
+  </div>
+</template>
+```
+
+### React/JSX Example
+```jsx
+function MyComponent() {
+  return (
+    <div>
+      <p>plorem30</p> {/* Generates 30 words */}
+    </div>
+  );
+}
+```
 
 ## Contributing
 
